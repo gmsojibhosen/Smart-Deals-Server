@@ -10,14 +10,22 @@ const port = process.env.PORT || 3000;
 
 import { initializeApp, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-// index.js
-const decoded = Buffer.from(process.env.FB_SERVICE_KEY, "base64").toString("utf8");
+
+// Check if the environment variable exists
+if (!process.env.FIREBASE_SERVICE_KEY) {
+  throw new Error("FIREBASE_SERVICE_KEY environment variable is missing.");
+}
+
+const decoded = Buffer.from(
+  process.env.FIREBASE_SERVICE_KEY,
+  "base64"
+).toString("utf8");
+
 const serviceAccount = JSON.parse(decoded);
 
 initializeApp({
   credential: cert(serviceAccount),
 });
-
 
 // middleware
 app.use(cors());
@@ -201,10 +209,10 @@ async function run() {
 }
 
 run().catch(console.dir)
-
-app.listen(port, () => {
-    console.log(`Smart server is running on port: ${port}`)
-})
+export default app;
+// app.listen(port, () => {
+//     console.log(`Smart server is running on port: ${port}`)
+// })
 
 // client.connect()
 //     .then(() => {
