@@ -10,7 +10,9 @@ const port = process.env.PORT || 3000;
 
 import { initializeApp, cert } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import serviceAccount from "./smart-deals-sojib-firebase-admin.json" with { type: "json" };
+// index.js
+const decoded = Buffer.from(process.env.FB_SERVICE_KEY, "base64").toString("utf8");
+const serviceAccount = JSON.parse(decoded);
 
 initializeApp({
   credential: cert(serviceAccount),
