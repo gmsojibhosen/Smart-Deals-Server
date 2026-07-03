@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Firebase Service Key চেক এবং ডিকোড করা
+// Firebase Service Key 
 if (!process.env.FIREBASE_SERVICE_KEY) {
   throw new Error("FIREBASE_SERVICE_KEY environment variable is missing.");
 }
