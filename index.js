@@ -16,12 +16,8 @@ if (!process.env.FIREBASE_SERVICE_KEY) {
   throw new Error("FIREBASE_SERVICE_KEY environment variable is missing.");
 }
 
-const decoded = Buffer.from(
-  process.env.FIREBASE_SERVICE_KEY,
-  "base64"
-).toString("utf8");
 
-const serviceAccount = JSON.parse(decoded);
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_KEY);
 
 initializeApp({
   credential: cert(serviceAccount),
@@ -50,7 +46,7 @@ const verifyFireBaseToken = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error);
+    console.log('this',error);
     return res.status(401).send({ message: "unauthorized access" });
   }
 };
